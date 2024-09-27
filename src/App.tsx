@@ -94,7 +94,7 @@ function App() {
         <form className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="gvwr">
-              GVWR (Maximum Loaded Weight of the Vehicle)
+              GVWR (Maximum Loaded Weight of Vehicle)
             </Label>
             <Input
               id="gvwr"
