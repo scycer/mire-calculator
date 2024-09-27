@@ -9,17 +9,47 @@ import './App.css'
 const ROUNDING_FACTOR = 1
 
 function App() {
-  const [gvwr, setGvwr] = useState(0)
-  const [angleResistance, setAngleResistance] = useState(0)
-  const [surfaceModifier, setSurfaceModifier] = useState(0)
-  const [mireDepthModifier, setMireDepthModifier] = useState(0)
+  const [gvwr, setGvwr] = useState(() => {
+    const saved = localStorage.getItem('gvwr')
+    return saved ? Number(saved) : 0
+  })
+  const [angleResistance, setAngleResistance] = useState(() => {
+    const saved = localStorage.getItem('angleResistance')
+    return saved ? Number(saved) : 0
+  })
+  const [surfaceModifier, setSurfaceModifier] = useState(() => {
+    const saved = localStorage.getItem('surfaceModifier')
+    return saved ? Number(saved) : 0
+  })
+  const [mireDepthModifier, setMireDepthModifier] = useState(() => {
+    const saved = localStorage.getItem('mireDepthModifier')
+    return saved ? Number(saved) : 0
+  })
   const [estimatedResistance, setEstimatedResistance] = useState(0)
   const [safetyMargin, setSafetyMargin] = useState(0)
   const [totalResistance, setTotalResistance] = useState(0)
 
+  const [angleValue, setAngleValue] = useState(() => {
+    const saved = localStorage.getItem('angleValue')
+    return saved || ''
+  })
+  const [surfaceValue, setSurfaceValue] = useState(() => {
+    const saved = localStorage.getItem('surfaceValue')
+    return saved || ''
+  })
+  const [mireValue, setMireValue] = useState(() => {
+    const saved = localStorage.getItem('mireValue')
+    return saved || ''
+  })
+
   const round = (value: number) => Math.round(value / ROUNDING_FACTOR) * ROUNDING_FACTOR
 
   useEffect(() => {
+    // Recalculate values when GVWR changes
+    setAngleResistance(round(gvwr * Number(angleValue)))
+    setSurfaceModifier(round(gvwr * Number(surfaceValue)))
+    setMireDepthModifier(round(gvwr * Number(mireValue)))
+
     const newEstimatedResistance = round(angleResistance + surfaceModifier + mireDepthModifier)
     const newSafetyMargin = round(newEstimatedResistance * 0.2)
     const newTotalResistance = round(newEstimatedResistance + newSafetyMargin)
@@ -27,7 +57,16 @@ function App() {
     setEstimatedResistance(newEstimatedResistance)
     setSafetyMargin(newSafetyMargin)
     setTotalResistance(newTotalResistance)
-  }, [gvwr, angleResistance, surfaceModifier, mireDepthModifier])
+
+    // Save to local storage
+    localStorage.setItem('gvwr', gvwr.toString())
+    localStorage.setItem('angleResistance', angleResistance.toString())
+    localStorage.setItem('surfaceModifier', surfaceModifier.toString())
+    localStorage.setItem('mireDepthModifier', mireDepthModifier.toString())
+    localStorage.setItem('angleValue', angleValue)
+    localStorage.setItem('surfaceValue', surfaceValue)
+    localStorage.setItem('mireValue', mireValue)
+  }, [gvwr, angleResistance, surfaceModifier, mireDepthModifier, angleValue, surfaceValue, mireValue])
 
   return (
     <Card>
@@ -49,7 +88,13 @@ function App() {
 
           <div className="space-y-2">
             <Label htmlFor="angle">Angle Resistance</Label>
-            <Select onValueChange={(value) => setAngleResistance(round(gvwr * Number(value)))}>
+            <Select
+              onValueChange={(value) => {
+                setAngleResistance(round(gvwr * Number(value)))
+                setAngleValue(value)
+              }}
+              value={angleValue}
+            >
               <SelectTrigger id="angle">
                 <SelectValue placeholder="Select angle" />
               </SelectTrigger>
@@ -65,7 +110,13 @@ function App() {
 
           <div className="space-y-2">
             <Label htmlFor="surface">Surface Modifier</Label>
-            <Select onValueChange={(value) => setSurfaceModifier(gvwr * Number(value))}>
+            <Select
+              onValueChange={(value) => {
+                setSurfaceModifier(gvwr * Number(value))
+                setSurfaceValue(value)
+              }}
+              value={surfaceValue}
+            >
               <SelectTrigger id="surface">
                 <SelectValue placeholder="Select surface type" />
               </SelectTrigger>
@@ -81,7 +132,13 @@ function App() {
 
           <div className="space-y-2">
             <Label htmlFor="mire">Mire Depth Modifier</Label>
-            <Select onValueChange={(value) => setMireDepthModifier(gvwr * Number(value))}>
+            <Select
+              onValueChange={(value) => {
+                setMireDepthModifier(gvwr * Number(value))
+                setMireValue(value)
+              }}
+              value={mireValue}
+            >
               <SelectTrigger id="mire">
                 <SelectValue placeholder="Select mire depth" />
               </SelectTrigger>
