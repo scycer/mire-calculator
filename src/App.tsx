@@ -183,19 +183,29 @@ function App() {
             </Select>
           </div>
 
-          <div className="space-y-2 mt-2 pt-2 border-t border-gray-200 ">
+          <div className="pt-4 border-t border-gray-200 ">
             <div className="flex justify-between items-center text-blue-600 font-bold bg-blue-50 rounded-lg p-2 border border-blue-100">
               <Label>Total Estimated Resistance:</Label>
-              <span>{totalResistance || "---"}</span>
+              <span>
+                {totalResistance
+                  ? totalResistance.toLocaleString() + " kg"
+                  : "---"}
+              </span>
             </div>
             <div className="text-xs text-gray-600 p-4">
               <div className="flex justify-between items-center">
                 <Label>Estimated Resistance:</Label>
-                <span>{estimatedResistance || "---"}</span>
+                <span>
+                  {estimatedResistance
+                    ? estimatedResistance.toLocaleString() + " kg"
+                    : "---"}
+                </span>
               </div>
               <div className="flex justify-between items-center">
                 <Label>+ 20% Safety Margin:</Label>
-                <span>{safetyMargin || "---"}</span>
+                <span>
+                  {safetyMargin ? safetyMargin.toLocaleString() + " kg" : "---"}
+                </span>
               </div>
             </div>
           </div>
