@@ -118,11 +118,13 @@ function App() {
                 <SelectValue placeholder="Select angle" />
               </SelectTrigger>
               <SelectContent position="popper">
-                <SelectItem value="0.2">10 Degrees (GVWR x 0.2)</SelectItem>
-                <SelectItem value="0.4">20 Degrees (GVWR x 0.4)</SelectItem>
-                <SelectItem value="0.6">30 Degrees (GVWR x 0.6)</SelectItem>
-                <SelectItem value="0.8">40 Degrees (GVWR x 0.8)</SelectItem>
-                <SelectItem value="1.0">50 Degrees (GVWR x 1.0)</SelectItem>
+                <SelectItem value="0.75">45 Degrees Uphill (ADD 75% or 0.75 of weight)</SelectItem>
+                <SelectItem value="0.50">30 Degrees Uphill (ADD 50% or 0.50 of weight)</SelectItem>
+                <SelectItem value="0.25">15 Degrees Uphill (ADD 25% or 0.25 of weight)</SelectItem>
+                <SelectItem value="0">0 Degrees (Level, no calculation required)</SelectItem>
+                <SelectItem value="-0.25">15 Degrees Downhill (SUBTRACT 25% or 0.25 of weight)</SelectItem>
+                <SelectItem value="-0.50">30 Degrees Downhill (SUBTRACT 50% or 0.50 of weight)</SelectItem>
+                <SelectItem value="-0.75">45 Degrees Downhill (SUBTRACT 75% or 0.75 of weight)</SelectItem>
               </SelectContent>
             </Select>
           </div>
