@@ -87,11 +87,13 @@ function App() {
   ]);
 
   return (
-    <a href="https://act4wdclub.org.au/" target="_blank" rel="noopener noreferrer">
+
       <Card className="m-4">
         <CardHeader>
-          <CardTitle>
+        <CardTitle>
+          <a href="https://act4wdclub.org.au/" target="_blank" rel="noopener noreferrer">
             <img src={logo} alt="ACT 4WD Club Logo" className="h-8 w-auto inline mr-2" />
+          </a>
             ACT 4WD Club
           </CardTitle>
         </CardHeader>
@@ -219,7 +221,6 @@ function App() {
           </form>
         </CardContent>
       </Card>
-    </a>
   );
 }
 
